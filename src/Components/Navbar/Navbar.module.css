@@ -1,0 +1,20 @@
+.settingIcon{
+    width: 32px;
+    height: 32px;
+
+}
+
+.linkSettingIcon{
+    width: 10vw;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    gap: 10px;
+ 
+}
+
+
+

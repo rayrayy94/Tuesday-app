@@ -20,8 +20,9 @@ import {
   ExternalLinkIcon,
 } from '@chakra-ui/icons';
 
-import React from 'react';
 import styles from './Navbar.module.css';
+import { FiSettings, FiHelpCircle } from 'react-icons/fi';
+import { AiOutlineNotification } from 'react-icons/ai';
 
 function Navbar() {
   return (
@@ -63,13 +64,21 @@ function Navbar() {
 
           <Spacer />
 
-          <Box>
-            <Flex gap={5} align={'center'}>
-              <Box>
-                <Link>Home</Link>
+          <Box className={styles.main_box}>
+            <Flex alignItems={'center'} gap={5}>
+              <Box className={styles.linkSettingIcon}>
+                <Link>
+                  <AiOutlineNotification className={styles.settingIcon} />
+                </Link>
+                <Link>
+                  <FiHelpCircle className={styles.settingIcon} />
+                </Link>
+                <Link>
+                  <FiSettings className={styles.settingIcon} />
+                </Link>
               </Box>
 
-              <Menu>
+              <Menu className={styles.box2}>
                 <MenuButton
                   as={IconButton}
                   aria-label="Options"
