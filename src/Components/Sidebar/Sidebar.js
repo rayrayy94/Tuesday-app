@@ -5,26 +5,27 @@ import styles from './Sidebar.module.css';
 
 function Sidebar() {
   return (
-    <Box className={styles.linkBox}>
-      <Link _hover={'none'}>
-        <Box color={'white'} fontSize={{ base: 'xl', lg: '2xl' }}>
+    <Box className={styles.linkBox} mr={2} pr={12}>
+      <Link _hover={'none'} href="/">
+        <Box color={'white'} fontSize={{ base: 'xl' }}>
           <Flex align={'center'}>
             <GoHome className={styles.dashboardIcon1} />
-            Dashboard
+            Home
           </Flex>
         </Box>
       </Link>
 
-      <Link _hover={'none'}>
+      <Link _hover={'none'} href="/backlog">
         <Box
           color={'white'}
-          fontSize={{ base: 'xl', lg: '2xl' }}
+          fontSize={{ base: 'xl' }}
           marginTop={2}
           marginLeft={0.5}
+          marginBottom={2}
         >
           <Flex align={'center'}>
             <CalendarIcon className={styles.dashboardIcon2} />
-            My Work
+            Backlog
           </Flex>
         </Box>
       </Link>

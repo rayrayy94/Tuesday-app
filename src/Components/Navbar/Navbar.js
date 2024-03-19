@@ -68,13 +68,19 @@ function Navbar() {
             <Flex alignItems={'center'} gap={5}>
               <Box className={styles.linkSettingIcon}>
                 <Link>
-                  <AiOutlineNotification className={styles.settingIcon} />
+                  <abbr title="Notifications">
+                    <AiOutlineNotification className={styles.settingIcon} />
+                  </abbr>
                 </Link>
                 <Link>
-                  <FiHelpCircle className={styles.settingIcon} />
+                  <abbr title="Help">
+                    <FiHelpCircle className={styles.settingIcon} />
+                  </abbr>
                 </Link>
                 <Link>
-                  <FiSettings className={styles.settingIcon} />
+                  <abbr title="Settings">
+                    <FiSettings className={styles.settingIcon} />
+                  </abbr>
                 </Link>
               </Box>
 
