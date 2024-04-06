@@ -49,7 +49,7 @@ function HamburgerMenu() {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size={'2xl'}
+        size={'xl'}
         scrollBehavior={'inside'}
       >
         <ModalOverlay />
