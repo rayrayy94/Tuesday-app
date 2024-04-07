@@ -38,6 +38,19 @@ app.get('/get-ticket', async (req, res) => {
   }
 });
 
+// GET TICKET BY ID
+app.get('/get-ticket/:id', async (req, res) => {
+  try {
+    const _id = req.params.id;
+    let getTicket = await Ticket.findById(_id);
+    res.status(200).send(getTicket);
+  } catch {
+    e => {
+      res.status(500).send(e);
+    };
+  }
+});
+
 // UPDATE TICKET
 app.patch('/update-ticket/:id', async (req, res) => {
   try {

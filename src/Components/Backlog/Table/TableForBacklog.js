@@ -9,19 +9,32 @@ import {
   TableContainer,
   Button,
   useToast,
+  Flex,
+  Badge,
+  useDisclosure,
 } from '@chakra-ui/react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import API from '../../../Config/Config';
-import { EditIcon } from '@chakra-ui/icons';
+import { EditIcon, ViewIcon } from '@chakra-ui/icons';
+import EditTicket from './EditTicket/EditTicket';
+import ViewTicket from './ViewTicket/ViewTicket';
 
 function TableForBacklog() {
   const [tickets, setTickets] = useState([]);
   const toast = useToast();
+  const [refresh, setRefresh] = useReducer(x => x + 1, 0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [id, setId] = useState(0);
+
+  function closeModal() {
+    onClose(true);
+  }
 
   useEffect(() => {
     getTickets();
-  }, []);
+    deleteTicket();
+  }, [refresh]);
 
   const getTickets = () => {
     axios
@@ -52,6 +65,16 @@ function TableForBacklog() {
       .catch(e => console.log(e));
   };
 
+  const deleteTicket = id => {
+    axios
+      .delete(`${API.apiUri}/delete-ticket/${id}`)
+      .then(res => {
+        console.log(res.data);
+        setRefresh();
+      })
+      .catch(e => console.log(e));
+  };
+
   return (
     <>
       <TableContainer>
@@ -62,8 +85,10 @@ function TableForBacklog() {
               <Th>Ticket Name</Th>
               <Th>Created At</Th>
               <Th>Status</Th>
-              <Th>Action</Th>
+              <Th>Edit</Th>
+              <Th>View</Th>
               <Th>Manage</Th>
+              <Th>Delete</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -76,14 +101,41 @@ function TableForBacklog() {
                     color={item.ticketStatus === 'ToDo' ? 'grey' : 'white'}
                     fontWeight={'bold'}
                   >
-                    {item.ticketStatus}
+                    <Badge>{item.ticketStatus}</Badge>
                   </Td>
                   <Td>
-                    <EditIcon />
+                    <EditIcon
+                      _hover={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        onOpen();
+                        setId(item._id);
+                      }}
+                    />
+                  </Td>
+                  <Td>
+                    <ViewIcon
+                      _hover={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        onOpen();
+                        setId(item._id);
+                      }}
+                    />
                   </Td>
                   <Td>
                     <Button onClick={() => updateTicket(item._id, item.status)}>
                       Start Work
+                    </Button>
+                  </Td>
+                  <Td>
+                    <Button
+                      color={'white'}
+                      bg={'darkred'}
+                      _hover={{
+                        bg: 'red',
+                      }}
+                      onClick={() => deleteTicket(item._id)}
+                    >
+                      Delete
                     </Button>
                   </Td>
                 </Tr>
@@ -92,6 +144,9 @@ function TableForBacklog() {
           </Tbody>
         </Table>
       </TableContainer>
+
+      <EditTicket onClose={closeModal} isOpen={isOpen} id={id} />
+      <ViewTicket onClose={closeModal} isOpen={isOpen} id={id} />
     </>
   );
 }
