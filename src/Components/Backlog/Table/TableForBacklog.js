@@ -9,9 +9,7 @@ import {
   TableContainer,
   Button,
   useToast,
-  Flex,
   Badge,
-  useDisclosure,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useReducer, useState } from 'react';
@@ -24,12 +22,10 @@ function TableForBacklog() {
   const [tickets, setTickets] = useState([]);
   const toast = useToast();
   const [refresh, setRefresh] = useReducer(x => x + 1, 0);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [id, setId] = useState(0);
 
-  function closeModal() {
-    onClose(true);
-  }
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [selectedTicketId, setSelectedTicketId] = useState(0);
 
   useEffect(() => {
     getTickets();
@@ -75,6 +71,21 @@ function TableForBacklog() {
       .catch(e => console.log(e));
   };
 
+  const openEditModal = id => {
+    setSelectedTicketId(id);
+    setEditModalOpen(true);
+  };
+
+  const openViewModal = id => {
+    setSelectedTicketId(id);
+    setViewModalOpen(true);
+  };
+
+  const closeModals = () => {
+    setEditModalOpen(false);
+    setViewModalOpen(false);
+  };
+
   return (
     <>
       <TableContainer>
@@ -107,8 +118,7 @@ function TableForBacklog() {
                     <EditIcon
                       _hover={{ cursor: 'pointer' }}
                       onClick={() => {
-                        onOpen();
-                        setId(item._id);
+                        openEditModal(item._id);
                       }}
                     />
                   </Td>
@@ -116,8 +126,7 @@ function TableForBacklog() {
                     <ViewIcon
                       _hover={{ cursor: 'pointer' }}
                       onClick={() => {
-                        onOpen();
-                        setId(item._id);
+                        openViewModal(item._id);
                       }}
                     />
                   </Td>
@@ -145,8 +154,16 @@ function TableForBacklog() {
         </Table>
       </TableContainer>
 
-      <EditTicket onClose={closeModal} isOpen={isOpen} id={id} />
-      <ViewTicket onClose={closeModal} isOpen={isOpen} id={id} />
+      <EditTicket
+        onClose={closeModals}
+        isOpen={editModalOpen}
+        id={selectedTicketId}
+      />
+      <ViewTicket
+        onClose={closeModals}
+        isOpen={viewModalOpen}
+        id={selectedTicketId}
+      />
     </>
   );
 }

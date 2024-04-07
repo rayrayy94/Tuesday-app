@@ -64,6 +64,7 @@ function ViewTicket({ isOpen, onClose, id }) {
                 id="ticketName"
                 placeholder="Ticket Name"
                 ref={tickerNameRef}
+                readOnly
               />
               <br />
               <br />
@@ -73,6 +74,7 @@ function ViewTicket({ isOpen, onClose, id }) {
                 id="description"
                 placeholder="Description"
                 ref={ticketDescriptionRef}
+                readOnly
               ></Textarea>
               <br />
               <br />

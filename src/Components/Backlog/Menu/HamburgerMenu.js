@@ -11,7 +11,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
@@ -59,15 +58,6 @@ function HamburgerMenu() {
           <ModalBody>
             <Form onClose={closeModal} />
           </ModalBody>
-
-          <ModalFooter>
-            {/* <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button> */}
-            {/* <Button variant="ghost" className="ghostBTN" onClick={addTicket}>
-              Create
-            </Button> */}
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

@@ -5,6 +5,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
+  useToast,
 } from '@chakra-ui/react';
 import {
   Badge,
@@ -19,24 +20,68 @@ import {
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { apiUri } from '../../../../Config/Config';
+import './EditTicket.css';
 
 function EditTicket({ isOpen, onClose, id }) {
-  const tickerNameRef = useRef();
+  const ticketNameRef = useRef();
   const ticketDescriptionRef = useRef();
   const [ticketStatus, setTicketStatus] = useState('');
   const [images, setImages] = useState([]);
+  const toast = useToast();
 
   useEffect(() => {
     axios
       .get(`${apiUri}/get-ticket/${id}`)
       .then(res => {
-        tickerNameRef.current.value = res.data.ticketName;
+        ticketNameRef.current.value = res.data.ticketName;
         ticketDescriptionRef.current.value = res.data.description;
         setTicketStatus(res.data.ticketStatus);
         setImages([...res.data.images]);
       })
       .catch(e => console.log(e));
   }, [id]);
+
+  function saveTicket() {
+    const ticketName = ticketNameRef.current?.value;
+    const description = ticketDescriptionRef.current?.value;
+    const imageCopy = [...images];
+
+    const payload = {
+      ticketName,
+      description,
+      images: imageCopy,
+    };
+
+    axios
+      .patch(`${apiUri}/update-ticket/${id}`, payload)
+      .then(res => {
+        console.log(res);
+        toast({
+          title: 'Ticket Updated',
+          description: 'You have successfully updated the ticket',
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+        onClose();
+      })
+      .catch(e => console.log(e));
+  }
+
+  const uploadFile = e => {
+    let files = e.target.files;
+    for (let i = 0; i < files.length; i++) {
+      (function (file) {
+        var reader = new FileReader();
+        reader.onload = () => {
+          if (images.length < 6) {
+            setImages(prevState => [...prevState, reader.result]);
+          }
+        };
+        reader.readAsDataURL(file);
+      })(files[i]);
+    }
+  };
 
   return (
     <div>
@@ -63,7 +108,8 @@ function EditTicket({ isOpen, onClose, id }) {
                 name="ticketName"
                 id="ticketName"
                 placeholder="Ticket Name"
-                ref={tickerNameRef}
+                ref={ticketNameRef}
+                defaultValue={ticketNameRef.current?.value}
               />
               <br />
               <br />
@@ -73,10 +119,18 @@ function EditTicket({ isOpen, onClose, id }) {
                 id="description"
                 placeholder="Description"
                 ref={ticketDescriptionRef}
+                defaultValue={ticketDescriptionRef.current?.value}
               ></Textarea>
               <br />
               <br />
-              <FormLabel fontSize={14}>Uploaded Images</FormLabel>
+              <FormLabel fontSize={14}>Upload Images (0-6)</FormLabel>
+              <Input
+                type="file"
+                name="images"
+                id="images"
+                border={'none'}
+                onChange={uploadFile}
+              />
 
               <br />
 
@@ -102,8 +156,9 @@ function EditTicket({ isOpen, onClose, id }) {
                             />
                             <Button
                               onClick={() =>
-                                setImages(images.filter(e => e !== images))
+                                setImages(images.filter(e => e !== item))
                               }
+                              className="removeBTN"
                             >
                               Remove
                             </Button>
@@ -127,7 +182,11 @@ function EditTicket({ isOpen, onClose, id }) {
               </Box>
               <br />
               <Flex justify={'flex-end'}>
-                <Button colorScheme="blue" mr={3}>
+                <Button
+                  colorScheme="blue"
+                  mr={3}
+                  onClick={() => saveTicket(id)}
+                >
                   Save
                 </Button>
                 <Button variant="ghost" className="ghostBTN" onClick={onClose}>
