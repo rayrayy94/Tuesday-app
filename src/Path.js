@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar/Navbar';
 import Sidebar from './Components/Sidebar/Sidebar';
 import Main from './Components/Main/Main';
 import Backlog from './Components/Backlog/Backlog';
+import Board from './Components/Board/Board';
 
 function Path() {
   return (
@@ -45,6 +46,15 @@ function Path() {
                   <>
                     {' '}
                     <Backlog />
+                  </>
+                }
+              />
+              <Route
+                path="/board"
+                element={
+                  <>
+                    {' '}
+                    <Board />
                   </>
                 }
               />

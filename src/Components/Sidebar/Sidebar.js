@@ -29,6 +29,21 @@ function Sidebar() {
           </Flex>
         </Box>
       </Link>
+
+      <Link _hover={'none'} href="/board">
+        <Box
+          color={'white'}
+          fontSize={{ base: 'xl' }}
+          marginTop={2}
+          marginLeft={0.5}
+          marginBottom={2}
+        >
+          <Flex align={'center'}>
+            <CalendarIcon className={styles.dashboardIcon2} />
+            Board
+          </Flex>
+        </Box>
+      </Link>
     </Box>
   );
 }
