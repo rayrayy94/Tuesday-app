@@ -35,10 +35,6 @@ const ticketsSchema = new mongoose.Schema({
       },
     },
   ],
-  started: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const Tickets = new mongoose.model('tickets', ticketsSchema);
