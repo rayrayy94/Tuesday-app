@@ -36,37 +36,39 @@ function Board() {
             {tickets.map(item => {
               return (
                 <>
-                  <Box
-                    w={'100%'}
-                    h={250}
-                    p={5}
-                    mt={3}
-                    borderRadius={10}
-                    bg={'#bcbcbc'}
-                  >
-                    <Box w={'fit-content'} margin={'auto'}>
-                      <img
-                        src={item.images[0]}
-                        alt="ticket"
-                        width={100}
-                        height={100}
-                      />
+                  {item.ticketStatus === 'todo' && (
+                    <Box
+                      w={'100%'}
+                      h={250}
+                      p={5}
+                      mt={3}
+                      borderRadius={10}
+                      bg={'#bcbcbc'}
+                    >
+                      <Box w={'fit-content'} margin={'auto'}>
+                        <img
+                          src={item.images[0]}
+                          alt="ticket"
+                          width={100}
+                          height={100}
+                        />
+                      </Box>
+                      <Flex justifyContent={'space-between'} align={'center'}>
+                        <Heading size={'sm'}> {item.ticketName} </Heading>
+                        <Badge>{item.ticketStatus}</Badge>
+                      </Flex>
+                      <p>
+                        {item.description.length > 50
+                          ? item.description.slice(0, 50) + '...'
+                          : item.description}
+                      </p>
+                      <br />
+                      <p>
+                        Created At:{' '}
+                        {new Date(item.createdAt).toLocaleDateString()}{' '}
+                      </p>
                     </Box>
-                    <Flex justifyContent={'space-between'} align={'center'}>
-                      <Heading size={'sm'}> {item.ticketName} </Heading>
-                      <Badge>{item.ticketStatus}</Badge>
-                    </Flex>
-                    <p>
-                      {item.description.length > 50
-                        ? item.description.slice(0, 50) + '...'
-                        : item.description}
-                    </p>
-                    <br />
-                    <p>
-                      Created At:{' '}
-                      {new Date(item.createdAt).toLocaleDateString()}{' '}
-                    </p>
-                  </Box>
+                  )}
                 </>
               );
             })}
@@ -84,37 +86,39 @@ function Board() {
             {tickets.map(item => {
               return (
                 <>
-                  <Box
-                    w={'100%'}
-                    h={250}
-                    p={5}
-                    mt={3}
-                    borderRadius={10}
-                    bg={'#bcbcbc'}
-                  >
-                    <Box w={'fit-content'} margin={'auto'}>
-                      <img
-                        src={item.images[0]}
-                        alt="ticket"
-                        width={100}
-                        height={100}
-                      />
+                  {item.ticketStatus === 'inprogress' && (
+                    <Box
+                      w={'100%'}
+                      h={250}
+                      p={5}
+                      mt={3}
+                      borderRadius={10}
+                      bg={'#bcbcbc'}
+                    >
+                      <Box w={'fit-content'} margin={'auto'}>
+                        <img
+                          src={item.images[0]}
+                          alt="ticket"
+                          width={100}
+                          height={100}
+                        />
+                      </Box>
+                      <Flex justifyContent={'space-between'} align={'center'}>
+                        <Heading size={'sm'}> {item.ticketName} </Heading>
+                        <Badge>{item.ticketStatus}</Badge>
+                      </Flex>
+                      <p>
+                        {item.description.length > 50
+                          ? item.description.slice(0, 50) + '...'
+                          : item.description}
+                      </p>
+                      <br />
+                      <p>
+                        Created At:{' '}
+                        {new Date(item.createdAt).toLocaleDateString()}{' '}
+                      </p>
                     </Box>
-                    <Flex justifyContent={'space-between'} align={'center'}>
-                      <Heading size={'sm'}> {item.ticketName} </Heading>
-                      <Badge>{item.ticketStatus}</Badge>
-                    </Flex>
-                    <p>
-                      {item.description.length > 50
-                        ? item.description.slice(0, 50) + '...'
-                        : item.description}
-                    </p>
-                    <br />
-                    <p>
-                      Created At:{' '}
-                      {new Date(item.createdAt).toLocaleDateString()}{' '}
-                    </p>
-                  </Box>
+                  )}
                 </>
               );
             })}
@@ -132,37 +136,39 @@ function Board() {
             {tickets.map(item => {
               return (
                 <>
-                  <Box
-                    w={'100%'}
-                    h={250}
-                    p={5}
-                    mt={3}
-                    borderRadius={10}
-                    bg={'#bcbcbc'}
-                  >
-                    <Box w={'fit-content'} margin={'auto'}>
-                      <img
-                        src={item.images[0]}
-                        alt="ticket"
-                        width={100}
-                        height={100}
-                      />
+                  {item.ticketStatus === 'rework' && (
+                    <Box
+                      w={'100%'}
+                      h={250}
+                      p={5}
+                      mt={3}
+                      borderRadius={10}
+                      bg={'#bcbcbc'}
+                    >
+                      <Box w={'fit-content'} margin={'auto'}>
+                        <img
+                          src={item.images[0]}
+                          alt="ticket"
+                          width={100}
+                          height={100}
+                        />
+                      </Box>
+                      <Flex justifyContent={'space-between'} align={'center'}>
+                        <Heading size={'sm'}> {item.ticketName} </Heading>
+                        <Badge>{item.ticketStatus}</Badge>
+                      </Flex>
+                      <p>
+                        {item.description.length > 50
+                          ? item.description.slice(0, 50) + '...'
+                          : item.description}
+                      </p>
+                      <br />
+                      <p>
+                        Created At:{' '}
+                        {new Date(item.createdAt).toLocaleDateString()}{' '}
+                      </p>
                     </Box>
-                    <Flex justifyContent={'space-between'} align={'center'}>
-                      <Heading size={'sm'}> {item.ticketName} </Heading>
-                      <Badge>{item.ticketStatus}</Badge>
-                    </Flex>
-                    <p>
-                      {item.description.length > 50
-                        ? item.description.slice(0, 50) + '...'
-                        : item.description}
-                    </p>
-                    <br />
-                    <p>
-                      Created At:{' '}
-                      {new Date(item.createdAt).toLocaleDateString()}{' '}
-                    </p>
-                  </Box>
+                  )}
                 </>
               );
             })}
@@ -180,37 +186,39 @@ function Board() {
             {tickets.map(item => {
               return (
                 <>
-                  <Box
-                    w={'100%'}
-                    h={250}
-                    p={5}
-                    mt={3}
-                    borderRadius={10}
-                    bg={'#bcbcbc'}
-                  >
-                    <Box w={'fit-content'} margin={'auto'}>
-                      <img
-                        src={item.images[0]}
-                        alt="ticket"
-                        width={100}
-                        height={100}
-                      />
+                  {item.ticketStatus === 'completed' && (
+                    <Box
+                      w={'100%'}
+                      h={250}
+                      p={5}
+                      mt={3}
+                      borderRadius={10}
+                      bg={'#bcbcbc'}
+                    >
+                      <Box w={'fit-content'} margin={'auto'}>
+                        <img
+                          src={item.images[0]}
+                          alt="ticket"
+                          width={100}
+                          height={100}
+                        />
+                      </Box>
+                      <Flex justifyContent={'space-between'} align={'center'}>
+                        <Heading size={'sm'}> {item.ticketName} </Heading>
+                        <Badge>{item.ticketStatus}</Badge>
+                      </Flex>
+                      <p>
+                        {item.description.length > 50
+                          ? item.description.slice(0, 50) + '...'
+                          : item.description}
+                      </p>
+                      <br />
+                      <p>
+                        Created At:{' '}
+                        {new Date(item.createdAt).toLocaleDateString()}{' '}
+                      </p>
                     </Box>
-                    <Flex justifyContent={'space-between'} align={'center'}>
-                      <Heading size={'sm'}> {item.ticketName} </Heading>
-                      <Badge>{item.ticketStatus}</Badge>
-                    </Flex>
-                    <p>
-                      {item.description.length > 50
-                        ? item.description.slice(0, 50) + '...'
-                        : item.description}
-                    </p>
-                    <br />
-                    <p>
-                      Created At:{' '}
-                      {new Date(item.createdAt).toLocaleDateString()}{' '}
-                    </p>
-                  </Box>
+                  )}
                 </>
               );
             })}

@@ -14,7 +14,7 @@ const ticketsSchema = new mongoose.Schema({
   },
   ticketStatus: {
     type: String,
-    default: 'created',
+    default: 'todo',
   },
   description: {
     type: String,

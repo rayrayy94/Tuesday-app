@@ -110,7 +110,7 @@ function TableForBacklog() {
                   <Td>{item.ticketName}</Td>
                   <Td>{new Date(item.createdAt).toLocaleDateString()}</Td>
                   <Td
-                    color={item.ticketStatus === 'ToDo' ? 'grey' : 'white'}
+                    color={item.ticketStatus === 'todo' ? 'grey' : 'white'}
                     fontWeight={'bold'}
                   >
                     <Badge>{item.ticketStatus}</Badge>
