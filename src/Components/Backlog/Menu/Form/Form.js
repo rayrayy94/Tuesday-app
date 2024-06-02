@@ -15,7 +15,7 @@ import API from '../../../../Config/Config';
 import './Form.css';
 import { useState } from 'react';
 
-function Form({ onClose }) {
+function Form({ onClose, setRefresh }) {
   let [images, setImages] = useState([]);
   const toast = useToast();
 
@@ -45,6 +45,7 @@ function Form({ onClose }) {
           isClosable: true,
         });
         onClose();
+        setRefresh();
       })
       .catch(e => {
         console.log(e);

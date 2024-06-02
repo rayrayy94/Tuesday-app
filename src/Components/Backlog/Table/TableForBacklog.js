@@ -13,39 +13,22 @@ import {
 } from '@chakra-ui/react';
 
 import axios from 'axios';
-import { useEffect, useReducer, useState } from 'react';
+import { useState } from 'react';
 import API from '../../../Config/Config';
 import { EditIcon, ViewIcon } from '@chakra-ui/icons';
 import EditTicket from './EditTicket/EditTicket';
 import ViewTicket from './ViewTicket/ViewTicket';
 
-function TableForBacklog() {
-  const [tickets, setTickets] = useState([]);
+function TableForBacklog({ setRefresh, data }) {
   const toast = useToast();
-  const [refresh, setRefresh] = useReducer(x => x + 1, 0);
 
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [selectedTicketId, setSelectedTicketId] = useState(0);
 
-  useEffect(() => {
-    getTickets();
-    deleteTicket();
-  }, [refresh]);
-
-  const getTickets = () => {
-    axios
-      .get(`${API.apiUri}/get-ticket`)
-      .then(res => {
-        console.log(res.data);
-        setTickets(res.data);
-      })
-      .catch(e => console.log(e));
-  };
-
-  const updateTicket = (id, status) => {
+  const updateTicket = id => {
     const payload = {
-      status: !status,
+      ticketStatus: 'todo',
     };
     axios
       .patch(`${API.apiUri}/update-ticket/${id}`, payload)
@@ -58,6 +41,7 @@ function TableForBacklog() {
           duration: 2000,
           isClosable: true,
         });
+        setRefresh();
       })
       .catch(e => console.log(e));
   };
@@ -104,51 +88,57 @@ function TableForBacklog() {
             </Tr>
           </Thead>
           <Tbody>
-            {tickets.map(item => {
+            {data.map(item => {
               return (
-                <Tr key={item._id}>
-                  <Td>{item.ticketName}</Td>
-                  <Td>{new Date(item.createdAt).toLocaleDateString()}</Td>
-                  <Td
-                    color={item.ticketStatus === 'todo' ? 'grey' : 'white'}
-                    fontWeight={'bold'}
-                  >
-                    <Badge>{item.ticketStatus}</Badge>
-                  </Td>
-                  <Td>
-                    <EditIcon
-                      _hover={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        openEditModal(item._id);
-                      }}
-                    />
-                  </Td>
-                  <Td>
-                    <ViewIcon
-                      _hover={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        openViewModal(item._id);
-                      }}
-                    />
-                  </Td>
-                  <Td>
-                    <Button onClick={() => updateTicket(item._id, item.status)}>
-                      Start Work
-                    </Button>
-                  </Td>
-                  <Td>
-                    <Button
-                      color={'white'}
-                      bg={'darkred'}
-                      _hover={{
-                        bg: 'red',
-                      }}
-                      onClick={() => deleteTicket(item._id)}
-                    >
-                      Delete
-                    </Button>
-                  </Td>
-                </Tr>
+                <>
+                  {item.ticketStatus === 'created' && (
+                    <Tr key={item._id}>
+                      <Td>{item.ticketName}</Td>
+                      <Td>{new Date(item.createdAt).toLocaleDateString()}</Td>
+                      <Td
+                        color={
+                          item.ticketStatus === 'created' ? 'grey' : 'white'
+                        }
+                        fontWeight={'bold'}
+                      >
+                        <Badge>{item.ticketStatus}</Badge>
+                      </Td>
+                      <Td>
+                        <EditIcon
+                          _hover={{ cursor: 'pointer' }}
+                          onClick={() => {
+                            openEditModal(item._id);
+                          }}
+                        />
+                      </Td>
+                      <Td>
+                        <ViewIcon
+                          _hover={{ cursor: 'pointer' }}
+                          onClick={() => {
+                            openViewModal(item._id);
+                          }}
+                        />
+                      </Td>
+                      <Td>
+                        <Button onClick={() => updateTicket(item._id)}>
+                          Start Work
+                        </Button>
+                      </Td>
+                      <Td>
+                        <Button
+                          color={'white'}
+                          bg={'darkred'}
+                          _hover={{
+                            bg: 'red',
+                          }}
+                          onClick={() => deleteTicket(item._id)}
+                        >
+                          Delete
+                        </Button>
+                      </Td>
+                    </Tr>
+                  )}
+                </>
               );
             })}
           </Tbody>

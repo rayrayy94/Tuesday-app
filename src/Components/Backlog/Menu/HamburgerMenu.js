@@ -20,7 +20,7 @@ import { useDisclosure } from '@chakra-ui/react';
 
 import Form from './Form/Form';
 
-function HamburgerMenu() {
+function HamburgerMenu({ setRefresh }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   function closeModal() {
@@ -56,7 +56,7 @@ function HamburgerMenu() {
           <ModalHeader> New Ticket</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Form onClose={closeModal} />
+            <Form onClose={closeModal} setRefresh={setRefresh} />
           </ModalBody>
         </ModalContent>
       </Modal>
